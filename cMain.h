@@ -11,8 +11,7 @@ public:
 	~cMain();
 	wxButton* m_btn1[20];
 	wxTextCtrl* m_txt1 = nullptr;
-	//wxListBox* m_list1 = nullptr;
-	//wxButton* m_btn2 = nullptr;
+	
 	void OnButtonClicked0(wxCommandEvent& evt);
 	void OnButtonClicked1(wxCommandEvent& evt);
 	void OnButtonClicked2(wxCommandEvent& evt);
