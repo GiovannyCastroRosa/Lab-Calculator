@@ -2,6 +2,7 @@
 
 #include "wx/wx.h"
 #include "cMain.h"
+#include "ButtonFactory.h"
 
 class cApp : public wxApp
 {
