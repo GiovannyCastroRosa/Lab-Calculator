@@ -31,8 +31,11 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(490, 690))
 {
+
+	Processor* processor = Processor::GetInstance();
+
+
 	//numbers
-	
 	m_btn1[0] = factory.CreateAddButton(this, 101, "0");
 	m_btn1[1] = factory.CreateAddButton(this, 102, "1");
 	m_btn1[2] = factory.CreateAddButton(this, 103, "2");
@@ -55,9 +58,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	m_btn1[17] = factory.CreateAddButton(this, 118, "Binary");
 	m_btn1[18] = factory.CreateAddButton(this, 119, "Hex");
 	m_btn1[19] = factory.CreateAddButton(this, 120, "Decimal");
-	
-	//wxButton tnt = btn.CreateAddButton(this, 130, "m", 30, 30, 190, 190);
-	
+
+
+
 	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(50, 50), wxSize(390, 90));
 
 
@@ -77,107 +80,162 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	case 101:
 	{
 		m_txt1->AppendText(m_btn1[0]->GetLabel());
+
 		break;
 	}
 	case 102:
 	{
 		m_txt1->AppendText(m_btn1[1]->GetLabel());
+
 		break;
 	}
 	case 103:
 	{
 		m_txt1->AppendText(m_btn1[2]->GetLabel());
+
 		break;
 	}
 	case 104:
 	{
 		m_txt1->AppendText(m_btn1[3]->GetLabel());
+
 		break;
 	}
 	case 105:
 	{
 		m_txt1->AppendText(m_btn1[4]->GetLabel());
+
 		break;
 	}
 	case 106:
 	{
 		m_txt1->AppendText(m_btn1[5]->GetLabel());
+
 		break;
 	}
 	case 107:
 	{
 		m_txt1->AppendText(m_btn1[6]->GetLabel());
+
 		break;
 	}
 	case 108:
 	{
 		m_txt1->AppendText(m_btn1[7]->GetLabel());
+
 		break;
 
 	}
 	case 109:
 	{
 		m_txt1->AppendText(m_btn1[8]->GetLabel());
+
 		break;
 
 	}
 	case 110:
 	{
+
 		m_txt1->AppendText(m_btn1[9]->GetLabel());
+
 		break;
 
 	}
 	case 111:
 	{
+		sNum = m_txt1->GetLineText(0);
+		if (func == "+")
+		{
+			sNum.erase(0, sNum.find_first_of("+") + 1);
+		}
+		else if (func == "-")
+		{
+			sNum.erase(0, sNum.find_first_of("-") + 1);
+		}
+		else if (func == "/")
+		{
+			sNum.erase(0, sNum.find_first_of("/") + 1);
+		}
+		else if (func == "*")
+		{
+			sNum.erase(0, sNum.find_first_of("*") + 1);
+		}
+
 		m_txt1->AppendText(m_btn1[10]->GetLabel());
+		
+		Calculation();
+
 		break;
 	}
 	case 112:
 	{
 
+		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[11]->GetLabel());
+
+		func = m_txt1->GetLineText(0);
+		func.erase(0, func.find_first_of("+"));
 		break;
 	}
 	case 113:
 	{
+		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[12]->GetLabel());
+
+		func = m_txt1->GetLineText(0);
+		func.erase(0, func.find_last_of("-"));
 		break;
 	}
 	case 114:
 	{
+		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[13]->GetLabel());
+
+		func = m_txt1->GetLineText(0);
+		func.erase(0, func.find_last_of("/"));
 		break;
 	}
 	case 115:
 	{
+		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[14]->GetLabel());
+
+		func = m_txt1->GetLineText(0);
+		func.erase(0, func.find_last_of("*"));
 		break;
 	}
 	case 116:
 	{
 		m_txt1->AppendText(m_btn1[15]->GetLabel());
+
 		break;
 	}
 	case 117:
 	{
+		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[16]->GetLabel());
+		tLine = m_txt1->GetLineLength(0);
+		func = m_txt1->GetLineText(0);
 		break;
 	}
 	case 118:
 	{
 
 		m_txt1->AppendText(m_btn1[17]->GetLabel());
+
 		break;
 	}
 	case 119:
 	{
 		m_txt1->AppendText(m_btn1[18]->GetLabel());
+
 		break;
 	}
 	case 120:
 	{
 
 		m_txt1->AppendText(m_btn1[19]->GetLabel());
+
 		break;
 	}
 	default:
@@ -185,6 +243,14 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	}
 
 	evt.Skip();
+}
+
+void cMain::Calculation()
+{
+	Processor* processor = Processor::GetInstance();
+	std::string result = processor->Calculation(fNum, sNum, func);
+	m_txt1->Clear();
+	m_txt1->AppendText(result);
 }
 
 
