@@ -31,9 +31,16 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(490, 690))
 {
-
-	Processor* processor = Processor::GetInstance();
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	// This function call will set a breakpoint at the location of a leaked block
+	// Set the parameter to the identifier for a leaked block
+	_CrtSetBreakAlloc(-1);
+	
+	
+	command.push_back(plus);
+	command.push_back(minus);
+	command.push_back(div);
+	command.push_back(multy);
 
 	//numbers
 	m_btn1[0] = factory.CreateAddButton(this, 101, "0");
@@ -64,12 +71,15 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(50, 50), wxSize(390, 90));
 
 
-
+	processor->GetRemove();
 }
 
 cMain::~cMain()
 {
-
+	delete plus;
+	delete minus;
+	delete div;
+	delete multy;
 }
 
 void cMain::OnButtonClicked(wxCommandEvent& evt)
@@ -172,36 +182,29 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 
 		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[11]->GetLabel());
-
-		func = m_txt1->GetLineText(0);
-		func.erase(0, func.find_first_of("+"));
+	
+		 func = command[0]->Execution();
 		break;
 	}
 	case 113:
 	{
 		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[12]->GetLabel());
-
-		func = m_txt1->GetLineText(0);
-		func.erase(0, func.find_last_of("-"));
+		func = command[1]->Execution();
 		break;
 	}
 	case 114:
 	{
 		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[13]->GetLabel());
-
-		func = m_txt1->GetLineText(0);
-		func.erase(0, func.find_last_of("/"));
+		func = command[2]->Execution();
 		break;
 	}
 	case 115:
 	{
 		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[14]->GetLabel());
-
-		func = m_txt1->GetLineText(0);
-		func.erase(0, func.find_last_of("*"));
+		func = command[3]->Execution();
 		break;
 	}
 	case 116:
@@ -214,8 +217,10 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	{
 		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[16]->GetLabel());
-		tLine = m_txt1->GetLineLength(0);
+		
 		func = m_txt1->GetLineText(0);
+		func.erase(0, func.find_last_of("mod"));
+		
 		break;
 	}
 	case 118:
@@ -247,10 +252,10 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 
 void cMain::Calculation()
 {
-	Processor* processor = Processor::GetInstance();
-	std::string result = processor->Calculation(fNum, sNum, func);
+	//Processor* processor = Processor::GetInstance();
+	
 	m_txt1->Clear();
-	m_txt1->AppendText(result);
+	m_txt1->AppendText(processor->Calculation(fNum, sNum, func));
 }
 
 

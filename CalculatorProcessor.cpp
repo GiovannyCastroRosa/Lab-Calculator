@@ -11,6 +11,15 @@ Processor* Processor::GetInstance()
 	return _processor;
 }
 
+void Processor::GetRemove()
+{
+	if (_processor != nullptr)
+	{
+		delete _processor;
+	}
+	
+}
+
 void Processor::SetBaseNumber(int number)
 {
 	baseNumber = number;
@@ -88,7 +97,7 @@ std::string Processor::Calculation(std::string _fNum, std::string _sNum, std::st
 	std::string result;
 	int f_num = std::stoi(_fNum);
 	int s_num = std::stoi(_sNum);
-	if (_func == "+")
+	if (_func  == "+")
 	{
 		baseNumber = f_num + s_num;
 	}
@@ -111,3 +120,4 @@ std::string Processor::Calculation(std::string _fNum, std::string _sNum, std::st
 	result = std::to_string(baseNumber);
 	return result;
 }
+
