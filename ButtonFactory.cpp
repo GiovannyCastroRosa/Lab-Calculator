@@ -85,7 +85,7 @@ wxButton* ButtonFactory::CreateAddButton(wxWindow* _main, wxWindowID _id, wxStri
 	}
 	case 115:
 	{
-		btn = new wxButton(_main, _id, _label, wxPoint(335, 190), wxSize(95, 95));
+		btn = new wxButton(_main, _id, _label, wxPoint(335, 193), wxSize(95, 85));
 		break;
 	}
 	case 116:
@@ -95,24 +95,24 @@ wxButton* ButtonFactory::CreateAddButton(wxWindow* _main, wxWindowID _id, wxStri
 	}
 	case 117:
 	{
-		btn = new wxButton(_main, _id, _label, wxPoint(235, 193), wxSize(95, 85));
+		btn = new wxButton(_main, _id, _label, wxPoint(236, 193), wxSize(95, 85));
 		break;
 	}
 	case 118:
 	{
 
-		btn = new wxButton(_main, _id, _label, wxPoint(110, 145), wxSize(90, 50));
+		btn = new wxButton(_main, _id, _label, wxPoint(110, 145), wxSize(75, 40));
 		break;
 	}
 	case 119:
 	{
-		btn = new wxButton(_main, _id, _label, wxPoint(200, 145), wxSize(90, 50));
+		btn = new wxButton(_main, _id, _label, wxPoint(200, 145), wxSize(78, 40));
 		break;
 	}
 	case 120:
 	{
 
-		btn = new wxButton(_main, _id, _label, wxPoint(290, 145), wxSize(90, 50));
+		btn = new wxButton(_main, _id, _label, wxPoint(290, 145), wxSize(85, 40));
 		break;
 	}
 	default:
@@ -120,6 +120,5 @@ wxButton* ButtonFactory::CreateAddButton(wxWindow* _main, wxWindowID _id, wxStri
 	}
 	return btn;
 }
-	
 
 

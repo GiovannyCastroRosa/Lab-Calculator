@@ -42,6 +42,9 @@
     <ClInclude Include="MultCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ModCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cApp.cpp">

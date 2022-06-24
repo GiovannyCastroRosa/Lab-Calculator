@@ -1,7 +1,7 @@
 #pragma once
 
 #include "wx/wx.h"
-
+#include <string>
 class ButtonFactory 
 {
 	

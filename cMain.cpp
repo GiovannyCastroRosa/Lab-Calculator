@@ -29,7 +29,7 @@ wxEND_EVENT_TABLE()
 
 
 
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(490, 690))
+cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(490, 700))
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	// This function call will set a breakpoint at the location of a leaked block
@@ -41,6 +41,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	command.push_back(minus);
 	command.push_back(div);
 	command.push_back(multy);
+	command.push_back(mod);
+
 
 	//numbers
 	m_btn1[0] = factory.CreateAddButton(this, 101, "0");
@@ -66,10 +68,11 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	m_btn1[18] = factory.CreateAddButton(this, 119, "Hex");
 	m_btn1[19] = factory.CreateAddButton(this, 120, "Decimal");
 
+	
 
-
-	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(50, 50), wxSize(390, 90));
-
+	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(50, 50), wxSize(390, 87), wxTE_CHARWRAP);
+	m_txt1->SetFont(m_txt1->GetFont().Scale(4.5));
+	
 
 	processor->GetRemove();
 }
@@ -80,66 +83,68 @@ cMain::~cMain()
 	delete minus;
 	delete div;
 	delete multy;
+	delete mod;
 }
 
 void cMain::OnButtonClicked(wxCommandEvent& evt)
 {
+	
 	int id = evt.GetId();
 	switch (id)
 	{
 	case 101:
 	{
 		m_txt1->AppendText(m_btn1[0]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 102:
 	{
 		m_txt1->AppendText(m_btn1[1]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 103:
 	{
 		m_txt1->AppendText(m_btn1[2]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 104:
 	{
 		m_txt1->AppendText(m_btn1[3]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 105:
 	{
 		m_txt1->AppendText(m_btn1[4]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 106:
 	{
 		m_txt1->AppendText(m_btn1[5]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 107:
 	{
 		m_txt1->AppendText(m_btn1[6]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 108:
 	{
 		m_txt1->AppendText(m_btn1[7]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 
 	}
 	case 109:
 	{
 		m_txt1->AppendText(m_btn1[8]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 
 	}
@@ -147,7 +152,7 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	{
 
 		m_txt1->AppendText(m_btn1[9]->GetLabel());
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 
 	}
@@ -170,11 +175,15 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 		{
 			sNum.erase(0, sNum.find_first_of("*") + 1);
 		}
+		else if (func == "mod")
+		{
+			sNum.erase(0, sNum.find_first_of("mod") + 3);
+		}
 
 		m_txt1->AppendText(m_btn1[10]->GetLabel());
 		
 		Calculation();
-
+		fNum = m_txt1->GetLineText(0);
 		break;
 	}
 	case 112:
@@ -210,7 +219,8 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	case 116:
 	{
 		m_txt1->AppendText(m_btn1[15]->GetLabel());
-
+		m_txt1->Clear();
+		
 		break;
 	}
 	case 117:
@@ -218,35 +228,44 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 		fNum = m_txt1->GetLineText(0);
 		m_txt1->AppendText(m_btn1[16]->GetLabel());
 		
-		func = m_txt1->GetLineText(0);
-		func.erase(0, func.find_last_of("mod"));
+		func = command[4]->Execution();
 		
 		break;
 	}
 	case 118:
 	{
-
-		m_txt1->AppendText(m_btn1[17]->GetLabel());
+		/*fNum = m_txt1->GetLineText(0);
+		processor->SetBaseNumber(std::stoi(fNum));*/
+		m_txt1->Clear();
+		m_txt1->AppendText(processor->GetBinary());
 
 		break;
 	}
 	case 119:
 	{
-		m_txt1->AppendText(m_btn1[18]->GetLabel());
+		/*fNum = m_txt1->GetLineText(0);
+		processor->SetBaseNumber(std::stoi(fNum));*/
+		m_txt1->Clear();
+		m_txt1->AppendText(processor->GetHexadeciaml());
 
 		break;
 	}
 	case 120:
 	{
-
-		m_txt1->AppendText(m_btn1[19]->GetLabel());
+		
+		m_txt1->Clear();
+		m_txt1->AppendText(processor->GetDecimal());
 
 		break;
 	}
 	default:
 		break;
 	}
-
+	
+	
+		
+	processor->SetBaseNumber(std::stoi(fNum));
+	
 	evt.Skip();
 }
 

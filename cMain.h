@@ -7,6 +7,7 @@
 #include "SubCommand.h"
 #include "DivCommand.h"
 #include "MultCommand.h"
+#include "ModCommand.h"
 #include <vector>
 
 class CalculatorProcessor;
@@ -27,6 +28,8 @@ public:
 	SubCommand* minus = new SubCommand();
 	DivCommand* div = new DivCommand();
 	MultCommand* multy = new MultCommand();
+	ModCommand* mod = new ModCommand();
+	//wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
 	std::vector<IBaseCommand*> command;
 	void OnButtonClicked(wxCommandEvent& evt);
 	void Calculation();

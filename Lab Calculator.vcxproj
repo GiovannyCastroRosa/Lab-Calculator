@@ -26,6 +26,7 @@
     <ClInclude Include="CalculatorProcessor.h" />
     <ClInclude Include="DivCommand.h" />
     <ClInclude Include="IBaseCommand.h" />
+    <ClInclude Include="ModCommand.h" />
     <ClInclude Include="MultCommand.h" />
     <ClInclude Include="SubCommand.h" />
   </ItemGroup>

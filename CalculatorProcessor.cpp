@@ -35,7 +35,7 @@ std::string Processor::GetBinary()
 	std::string result = "";
 	int number = baseNumber;
 
-	for (int i = 0; i < 32; i++)
+	/*for (int i = 0; i < 32; i++)
 	{
 		if (baseNumber % 2 == 0)
 		{
@@ -46,9 +46,9 @@ std::string Processor::GetBinary()
 			result = "1" + result;
 		}
 		number = number / 2;
-	}
+	}*/
 
-
+	result = std::bitset<16>(number).to_string();
 
 	return result;
 }
